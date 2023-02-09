@@ -1,0 +1,17 @@
+{
+  "name": "twilio-sip-call-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "fastify": "^4.12.0",
+    "twilio": "^4.7.1"
+  }
+}
