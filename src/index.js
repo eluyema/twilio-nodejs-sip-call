@@ -1,10 +1,12 @@
 import fastify from 'fastify';
 import config from './configs/env.config.js';
 import callRouter from './routes/call.js';
+import formbodyParser from '@fastify/formbody'
 
 const build = (opts = {}) => {
     const app = fastify(opts);
 
+    app.register(formbodyParser)
     app.register(callRouter, { prefix: "/call" });
     return app;
   };

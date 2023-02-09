@@ -9,6 +9,7 @@ const CLIENT_IDENTITY = `{"displayName":"Client"}`;
 
 const ROOM_NAME = 'd8735bb0-ff6e-4bce-a501-47c4e2d642a3';
 
+
 const callService = {
     getVideoCallTwiML: async function (roomName = ROOM_NAME)  {
         const response = new VoiceResponse();
@@ -17,15 +18,22 @@ const callService = {
 
         return response.toString();
     },
+    forceEndCall: async function (callSid) {
+        await client.calls(callSid).update({status: "completed" })
+    },
     makeOutboundCall: async function (sip, roomName) {
         const twiml = await this.getVideoCallTwiML(roomName);
 
-        await client.calls
-        .create({
-            twiml: twiml,
-            to:   sip,
-            from: "Client"
-        })
+        const { sid: callSid } = await client.calls
+            .create({
+                twiml: twiml,
+                statusCallback: config.twilio.webhookCallStatusUrl,
+                statusCallbackEvent: ['queued', 'initiated', 'ringing', 'in-progress', 'completed', 'busy', 'failed', 'no-answer', 'answered'],
+                statusCallbackMethod: "POST",
+                to:   sip,
+                from: "Client"
+            });
+        return callSid;
     }
 };
 

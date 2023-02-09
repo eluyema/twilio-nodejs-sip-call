@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/formbody": "^7.4.0",
     "dotenv": "^16.0.3",
     "fastify": "^4.12.0",
     "twilio": "^4.7.1"
